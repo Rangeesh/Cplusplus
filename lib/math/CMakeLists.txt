@@ -1,0 +1,5 @@
+cmake_minimum_required(VERSION 3.10)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+add_library(math SHARED operations.cpp)
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib/)
