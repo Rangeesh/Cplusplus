@@ -143,5 +143,41 @@ public:
 };
 ```
 
+## Contains Duplicates I
+Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k.
 
 
+### Answer
+
+```C++
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        
+        
+        // Logic
+        // Put in map. If it already exists, check difference. If <=k, true, else replace and continue
+        
+        // Size <=1 => false
+        
+        if (nums.size()<=1)
+            return false;
+        
+        map<int, int> M;
+        
+        for(int i = 0; i<nums.size(); ++i)
+        {
+            if (M.find(nums.at(i)) == M.end()){ // Does it exist or not in map. If not, add element
+                M[nums.at(i)] = i; 
+             continue;   
+            }
+            
+            if (abs(M[nums.at(i)] - i) <=k ) // Checking condition
+            {return true; }
+            M[nums.at(i)] = i; // Replace
+        }
+        
+        return false;       
+    }
+};
+```
