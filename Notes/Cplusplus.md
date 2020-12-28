@@ -27,3 +27,4 @@ int main()
     return 0;
 }
 ```
+3. Sometimes in `if` blocks inside `for loops`, you forget the `continue` statement. Don't forget it. 
