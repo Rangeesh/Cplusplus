@@ -183,3 +183,152 @@ public:
 ```
 Don't make silly mistakes with maps... Look at what you're trying to extract
 ![](https://github.com/Rangeesh/Cplusplus/blob/main/leetcode2.png)
+
+## Powerful Integers
+Don't make mistakes with such questions. Read if the bound is less than or less than and equal to. Also, 1 + 1 is 2. Just FYI
+
+
+
+```C++
+class Solution {
+public:
+    vector<int> powerfulIntegers(int x, int y, int bound) {
+        
+        // bound - 1 == max value of x^i => max value of i
+        // similar for max value of j. 
+        // Then do 2 for loop?
+        // If either number is 1 or if both are 1, then it is a special case. 
+        
+        if (x==1 and y==1)
+        {
+            vector<int> res{2};
+            if (bound > 1)
+            return res;
+            
+            res.clear();
+            return res;
+        }
+        
+        
+        
+        
+        unordered_set<int> S;
+        
+        int i = 0;
+        
+        while(x!=1)
+        {
+            int res = pow(x,i);
+            if ( (bound - 1) >= res)
+            {
+                S.insert(res+1);
+                ++i;
+                continue;
+            }
+            break;
+        }
+        // Max value of i is got
+        
+        int j = 0;
+        
+        while(y!=1)
+        {
+            int res = pow(y,j);
+            if ( (bound - 1) >= res)
+            {
+                S.insert(res+1);
+                ++j;
+                continue;
+            }
+            break;
+        }
+        // Max value of j is got
+        
+        for (int k = 0; k<=i; ++k)
+        {
+            for (int l = 0; l<=j; ++l)
+            {
+                int res = pow(x,k) + pow(y,l);
+                if (res <= bound){
+                    S.insert(res);
+                    continue;
+                }
+                break;
+            }
+        }
+        
+        vector<int> output;
+        
+        copy(S.begin(), S.end(), back_inserter(output));
+        
+        return output;
+        
+        
+    }
+};
+```
+
+A better solution
+
+```C++
+class Solution {
+public:
+    vector<int> powerfulIntegers(int x, int y, int bound) {
+       unordered_set<int> res;
+        if(x>y)swap(x,y);
+        for(int i=1;i<bound;i*=x){
+            for(int j=1;j<bound;j*=y){
+                if(i+j<=bound)res.insert(i+j);
+                else break;
+                if(y==1)break;
+            }
+            if(x==1)break;
+        }
+        return vector<int>(res.begin(),res.end());
+    }
+};
+```
+
+## Set Mismatch
+
+ The set S originally contains numbers from 1 to n. But unfortunately, due to the data error, one of the numbers in the set got duplicated to another number in the set, which results in repetition of one number and loss of another number.
+
+Given an array nums representing the data status of this set after the error. Your task is to firstly find the number occurs twice and then find the number that is missing. Return them in the form of an array. 
+
+
+### Answer
+
+```C++
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        // Insert all elements in map. If duplicate, out.
+        // Add sum side by side. Subtract from n(n+1)/2 . Done. Missing found
+        
+        unordered_map<int,int> M;
+        
+        
+        vector<int> res; // Use reserve if you want, not that (2) and all. It puts 2 zeros over there instead. 
+        int sum = 0;
+        
+        for(int a: nums)
+        {            
+            if (M.find(a)!=M.end())
+            {
+                res.push_back(a);
+                continue;
+            }
+            M[a]++;
+            sum +=a;
+        }
+        
+        int p = res[0];
+        int n = nums.size();      
+        
+        res.push_back(n*(n+1)/2 - sum);
+        return res;
+        
+    }
+};
+```
+
