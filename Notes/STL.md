@@ -63,7 +63,3 @@ std::generate_n(back_inserter(vec2), n, []{return vec_generator();}
 
 [Link 1](https://www.geeksforgeeks.org/stdback_inserter-in-cpp/)
 
-
-## 4. Lambda functions... How did they even get that name?
-
-
