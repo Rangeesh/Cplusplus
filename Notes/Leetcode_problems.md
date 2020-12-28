@@ -14,6 +14,63 @@ Make sure that based on the input given by the user, you modify int i to long lo
 
 So, when you're doing i * i, make sure that that number exists within the possible memory. So, as a safety, assign that to a bigger value, or use numeric_limits or something similar. 
 
+### Answer
+
+```C++
+class Solution {
+public:
+    int countPrimes(int n) {
+        if (n<=2)
+            return 0;
+        
+//         int i = 2;
+//         int ct = 0;
+//         unordered_map<int, bool> M;
+//         while (i <n){
+//             if (M.find(i)==M.end())
+//             {
+//                 ct++;
+//                 int mult = 2;
+//                 while(mult*i<n and sqrt(n) > i )
+//                 {
+//                     M[mult*i] = false;
+//                     ++mult;
+//                 }
+//             }
+//             ++i;
+//         }
+        
+//         return ct;
+        
+        vector<bool> primes(n, false);
+        
+        for (long long int i = 3; i < n; i+=2){
+            primes.at(i) = true;
+        } // Potential Primes
+        int countPrimes=0;
+        
+        for (long long int i = 3; i < n; i+=2){
+         
+            if (primes.at(i) == true)
+            {
+                ++countPrimes;
+                for (long double j = i*i; j<n; j+=i)
+                {
+                    primes.at(static_cast<int>(j)) = false;
+                }
+            }
+            
+        }
+        
+        
+        
+        return ++countPrimes; // For 2
+        
+        
+    }
+};
+```
+
 ## Bijection search in map 
 
 Given a pattern and a string s, find if s follows the same pattern.
