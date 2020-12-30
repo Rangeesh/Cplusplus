@@ -332,3 +332,51 @@ public:
 };
 ```
 
+## Isomorphic Strings
+
+Given two strings s and t, determine if they are isomorphic.
+
+Two strings are isomorphic if the characters in s can be replaced to get t.
+
+All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.
+
+### Answer
+
+class Solution {
+public:
+    bool isIsomorphic(string s, string t) {
+        
+        // Empty or no size match
+        
+        if (s.size()!=t.size())
+            return false;
+        
+        // Add in map. Keep checking if it didn't exist. If exist, check if they match
+        int i = 0;
+        unordered_map<char, char> M;
+        unordered_map<char, char> M2;
+        
+        while(i<s.size()){
+            char c = s[i];
+            char d = t[i];
+            if(M.find(c)!=M.end()){ // If exists, check
+                if (M[c]!=d)
+                    return false;
+            }
+            if(M2.find(d)!=M2.end()){ // If exists, check
+                if (M2[d]!=c)
+                    return false;
+            }
+            
+            M[c] = d;
+            M2[d] = c;
+            ++i;
+            
+        }
+        
+        return true;
+        
+    }
+};
+
+
