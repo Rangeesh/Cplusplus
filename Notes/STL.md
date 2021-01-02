@@ -63,3 +63,20 @@ std::generate_n(back_inserter(vec2), n, []{return vec_generator();}
 
 [Link 1](https://www.geeksforgeeks.org/stdback_inserter-in-cpp/)
 
+
+
+
+## 4. When to use unordered_map and when to use map?
+
+- Use map over unordered_map when
+ - You don't have much memory -- unordered_map uses more memory bcoz of hashing
+ - When you need a perfect time Complexity O(log N) ... and O(l) with a worst case of O(N) -- depending on the hash implementation
+ - When you want it to be sorted -- Balanced Trees are sorted.
+
+- Use unordered_map over map when
+ - You have a good hash implementation and lots of memory.
+ 
+ 
+
+
+
