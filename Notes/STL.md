@@ -75,6 +75,9 @@ std::generate_n(back_inserter(vec2), n, []{return vec_generator();}
 
 - Use unordered_map over map when
  - You have a good hash implementation and lots of memory.
+ [Link 1](https://thispointer.com/map-vs-unordered_map-when-to-choose-one-over-another/)
+ 
+ 
  
  
 
