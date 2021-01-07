@@ -78,6 +78,11 @@ std::generate_n(back_inserter(vec2), n, []{return vec_generator();}
  [Link 1](https://thispointer.com/map-vs-unordered_map-when-to-choose-one-over-another/)
  
  
+ ---
+ Topics for preparation.
+ 
+ STL Data types
+ ---
  
  
 
