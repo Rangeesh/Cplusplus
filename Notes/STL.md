@@ -79,11 +79,128 @@ std::generate_n(back_inserter(vec2), n, []{return vec_generator();}
  
  
  ---
- Topics for preparation.
  
  STL Data types
- ---
  
+## Vector
+### Initialization
+```C++
+//1 Normal
+vector<int> vect;
+vect.push_back(2); vect.push_back(4);
+//2 
+vector<int> vect(5,2); // (n, element). If it's a class, copy constructor needs to be defined.
+//3
+vector<int> A{1,2,3};
+//4a Range Constructor
+int arr[]={2,3,4,5};
+int n = sizeof(arr)/sizeof(int);
+vector<int> vect(arr, arr + n);
+//4b Range COnstructor
+vector<int> vect(vect1.begin(), vect1.end());
+//5 
+vector<int> vect;
+vect.reserve(50); // Array dynamically changing its size is avoided.
+//6 std::copy
+vector<int> A{2,3,4};
+vector<int> C(A.size());
+std::copy(A.begin(), A.end(), C.begin()); // Make sure to have the size of the C vector already defined.
+//6b
+std::copy(A.begin(), A.end(), std::back_inserter(C.begin())); // If memory isn't already allocated, it will allocate and then add in the value
+//7 Move
+vector<int> v1, v2;
+auto it = std::next(v1.begin(), 17); // Fills the next 17 elements. Doesn't fill_n also do that?
+std::move(v1.begin(), it, sstd::back_inserter(v2.begin())); // Size isn't reallocated, so use std::back_inserter
+v1.erase(v1.begin(), it); 
+// When you move, you actually create place holders in the vector you moved from. Therefore, you need to erase those, unless you want to reuse that memory again.
+// vector<char> to string
+std::ostringstream out;
+for (char c: vect)
+    out<<c;
+std::string s(out.str());
+// transform
+std::transform(charv.begin(), charv.end(), back_inserter(s), [](char c){return c;});
+// s.append(1,c); s.insert(i,1,charv[i]);
+// s +=c is same as s.push_back(c); // Memory is also allocated with push_back
+
+
+```
+### Access
+```C++
+//Size
+Vect.size();
+// Copying a vector into an array
+int arr[vect.size()];
+copy(vect.begin(), vect.end(), arr);
+
+```
+
+
+### Modification
+```C++
+//Erase
+vector<int> v1{2,3,5}; // Implicit type casting isn't possible during uniform initialization
+v1.erase(v1.begin(), v1.end());
+//Insert
+v1.insert(From where, new vector- sstart, new vector-end);
+v1.insert(v1.end(),v2.begin(), v2,end());
+// Insert with move
+v1.insert(v1.end(), std::make_move_iterator(v2.begin()), std::make_move_iterator(v2.end()));
+v2.erase(v2.begin(), v2.end()); // Removing placeholders. Move operation done.
+//Swap
+vector<int> v1{2,3,4}, v2{4,6,7,8}; 
+v1.swap(v2); // Any size for vectors
+//Swap Ranges
+std::swap_ranges(v1.begin(), v1.end(), v2.begin()); // Must be for same size of elements
+// Delete vector contents and free up space.
+v1.clear(); // size() changes. capacity() doesn't change. Similar behavior - erase()
+v1.shrink_to_fit(); // non-binding argument.
+vector<int> ().swap(v1)//Therefore, to free up the space
+
+
+```
+### Sorting
+```C++
+// Can you sort in reverse order?
+sort(A.begin(), A.end());
+reverse(A.begin(), A.end());
+//2
+sort(A.rbegin(),A.rend());
+//Comparator std::greater<int>() for reverse. std::less<int>() for normal
+struct comp
+{
+template<typename T>
+bool operator()(const T& lhs, const T& rhs){
+return lhs > rhs; // For reverse. For Normal, lhs < rhs
+}
+};
+sort(A.begin(), A.end(), comp());
+//3  lambda function
+sort(A.begin(), A.end(), [](const T& a, const T& b){return a>b;});
+
+
+
+```
+
+
+
+
+---
+# Questions
+1. What is the `std::make_move_iterator` ?
+2. What does `std::next` do?
+3. Tell me all about iterators ... Reverse, move itertors etc.
+
+
+ - Stack & Queue
+ 
+ - Set (All 4 variations)
+ - Map (All 4 variations)
+ 
+ - deque
+ - priority_queue
+ 
+ - string
  
 
 
