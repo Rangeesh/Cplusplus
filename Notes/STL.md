@@ -123,6 +123,9 @@ std::transform(charv.begin(), charv.end(), back_inserter(s), [](char c){return c
 // s.append(1,c); s.insert(i,1,charv[i]);
 // s +=c is same as s.push_back(c); // Memory is also allocated with push_back
 
+// 2D matrix initialization
+
+vector<int> M(20, vector<int>(10,5)); // All values initialized to 5. 20 rows. 10 columns.
 
 ```
 ### Access
@@ -157,8 +160,53 @@ v1.clear(); // size() changes. capacity() doesn't change. Similar behavior - era
 v1.shrink_to_fit(); // non-binding argument.
 vector<int> ().swap(v1)//Therefore, to free up the space
 
+// ERASE
+// vector.erase(iterator). Iterator is invalidated afterwards. To continue, iterator=vector.erase(iterator)
+vector<int> A{1, 2, 3, 4};
 
+for(auto it=A.begin();it!=A.end(); ++it){
+it=A.erase(it); // This will still have placeholders. So, to remove them, you need to do shrink_to_fit() member function. But, that's a non-binding request. 
+// Instead, swap with a temp. obj. vector<int>().swap(A);
+}
+//2 Range erase -- vector.erase(vector.begin(), vector.end());
+// remove_if
+namespace temp
+{
+struct remove{
+int key;
+remove(int k): key(k) {}
+bool operator()(const int &key_r)
+{
+if (key==key_r)
+ return true;
+return false; // Shorter will be return key==key_r;
+}
+};
+}
+
+void main()
+{
+...
+v.erase(v.remove_if(v.begin(), v.end(), temp::remove(5)), v.end());
+}
+
+// ASSIGN -- If you want to replace all the current elements with the new elements
+v.assign(a.begin(),a.end());
 ```
+
+
+### Remove Duplicates
+
+Constant space and O(n^2)
+
+void remove(vector<int>& v)
+ {
+ 
+ 
+ }
+
+
+
 ### Sorting
 ```C++
 // Can you sort in reverse order?
@@ -190,7 +238,14 @@ sort(A.begin(), A.end(), [](const T& a, const T& b){return a>b;});
 1. What is the `std::make_move_iterator` ?
 2. What does `std::next` do?
 3. Tell me all about iterators ... Reverse, move itertors etc.
+4. Temporary Objects - What are they and where all can you use them?
+5. Comparator -- What are all the ways? Learn Operator Overloading properly
+6. Templates. 
 
+
+# Important things that you forget
+1. copy requires that the container you are copying into needs to already have the memory allocated. If not, use the back_inserter iterator
+2. Sorting and reverse at the same time, use the rbegin() and rend() in sort. 
 
  - Stack & Queue
  
